@@ -4,4 +4,4 @@ description: |
   Build, test, and lint a Stack-based Haskell project
 
 display:
-  source_url: https://github.com/pbrisbin/stack-build-orb
+  source_url: https://github.com/stackbuilders/stack-build-orb
