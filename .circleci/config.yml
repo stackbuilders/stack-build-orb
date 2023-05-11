@@ -1,15 +1,13 @@
 version: 2.1
 
 orbs:
-  orb-tools: circleci/orb-tools@9.0
+  orb-tools: circleci/orb-tools@12.0.2
 
 workflows:
-  btd:
+  main:
     jobs:
       - orb-tools/lint
       - orb-tools/pack
-      - orb-tools/publish-dev:
+      - orb-tools/publish:
           orb-name: stackbuilders/stack-build
           requires: [orb-tools/pack, orb-tools/lint]
-          context: orb-publish
-          publish-token-variable: CIRCLECI_API_TOKEN
