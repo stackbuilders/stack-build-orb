@@ -8,6 +8,6 @@ workflows:
     jobs:
       - orb-tools/lint
       - orb-tools/pack
-      - orb-tools/publish:
-          orb_name: stackbuilders/stack-build
-          requires: [orb-tools/pack, orb-tools/lint]
+      # - orb-tools/publish:
+      #     orb_name: stackbuilders/stack-build
+      #     requires: [orb-tools/pack, orb-tools/lint]
