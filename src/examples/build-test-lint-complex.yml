@@ -6,7 +6,7 @@ usage:
   version: 2.1
 
   orbs:
-    stack-build: pbrisbin/stack-build@x.y
+    stack-build: stackbuilders/stack-build@x.y.z
 
   defaults: &defaults
     before-dependencies:
