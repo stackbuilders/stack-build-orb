@@ -7,8 +7,15 @@ workflows:
   main:
     jobs:
       - orb-tools/lint
-      - orb-tools/pack
+      - orb-tools/pack:
+          requires:
+            - orb-tools/lint
       - orb-tools/publish:
+          requires:
+            - orb-tools/pack
+          filter:
+            branches:
+              - main
+
           orb_name: stackbuilders/stack-build
-          requires: [orb-tools/pack, orb-tools/lint]
           vcs_type: github
