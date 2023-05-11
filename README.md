@@ -1,4 +1,6 @@
-# Stack Build Orb [![CircleCI status](https://circleci.com/gh/pbrisbin/stack-build-orb.svg "CircleCI status")](https://circleci.com/gh/pbrisbin/stack-build-orb)
+# Stack Build Orb
+
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/stackbuilders/stack-build-orb/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/stackbuilders/stack-build-orb/tree/main)
 
 Built, test, and lint Stack-based Haskell projects in your CircleCI jobs.
 
@@ -8,7 +10,7 @@ Built, test, and lint Stack-based Haskell projects in your CircleCI jobs.
 version: 2.1
 
 orbs:
-  stack-build: pbrisbin/stack-build@x.y
+  stack-build: stackbuilders/stack-build@x.y.z
 
 workflows:
   commit:
