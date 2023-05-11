@@ -13,9 +13,9 @@ workflows:
       - orb-tools/publish:
           requires:
             - orb-tools/pack
-          filter:
+          filters:
             branches:
-              - main
+              only: main
 
           orb_name: stackbuilders/stack-build
           vcs_type: github
