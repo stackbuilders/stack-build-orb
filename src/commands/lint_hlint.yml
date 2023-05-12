@@ -1,0 +1,21 @@
+---
+description: |
+  Lint the project with HLint
+
+parameters:
+  stack_yaml:
+    description: "Path to stack.yaml file to use"
+    type: string
+    default: stack.yaml
+  hlint_yaml_url:
+    description: "URL to hlint.yaml to download"
+    type: string
+    default: ""
+
+steps:
+  - run:
+      name: HLint
+      environment:
+        PARAM_STACK_YAML: <<parameters.stack_yaml>>
+        PARAM_HLINT_YAML_URL: <<parameters.hlint_yaml_url>>
+      command: <<include(scripts/hlint.sh)>>

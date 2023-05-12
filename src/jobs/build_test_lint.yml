@@ -2,35 +2,35 @@ description: |
   Build, test, and lint
 
 parameters:
-  stack-yaml:
+  stack_yaml:
     description: "Path to stack.yaml file to use"
     type: string
     default: stack.yaml
-  stack-arguments:
+  stack_arguments:
     description: "Additional arguments for ALL Stack invocations"
     type: string
     default: ""
-  install-stack:
+  install_stack:
     description: "Install Stack? Necessary with default executor"
     type: boolean
     default: true
-  upgrade-stack:
+  upgrade_stack:
     description: "Upgrade Stack? Only useful with custom executor"
     type: boolean
     default: false
-  before-dependencies:
+  before_dependencies:
     description: "Steps to run before installing dependencies"
     type: steps
     default: []
-  after-dependencies:
+  after_dependencies:
     description: "Steps to run after installing dependencies"
     type: steps
     default: []
-  before-test:
+  before_test:
     description: "Steps to run before tests"
     type: steps
     default: []
-  after-test:
+  after_test:
     description: "Steps to run after tests"
     type: steps
     default: []
@@ -38,7 +38,7 @@ parameters:
     description: "Run HLint?"
     type: boolean
     default: true
-  hlint-yaml-url:
+  hlint_yaml_url:
     description: "URL to hlint.yaml to download"
     type: string
     default: ""
@@ -46,7 +46,7 @@ parameters:
     description: "Run Weeder?"
     type: boolean
     default: true
-  cache-prefix:
+  cache_prefix:
     description: "Prefix used for all cache keys"
     type: string
     default: v1
@@ -61,32 +61,32 @@ executor: <<parameters.executor>>
 steps:
   - checkout
   - setup:
-      stack-yaml: <<parameters.stack-yaml>>
-      stack-arguments: <<parameters.stack-arguments>>
-      install-stack: <<parameters.install-stack>>
-      upgrade-stack: <<parameters.upgrade-stack>>
-      before-dependencies: <<parameters.before-dependencies>>
-      after-dependencies: <<parameters.after-dependencies>>
+      stack_yaml: <<parameters.stack_yaml>>
+      stack_arguments: <<parameters.stack_arguments>>
+      install_stack: <<parameters.install_stack>>
+      upgrade_stack: <<parameters.upgrade_stack>>
+      before_dependencies: <<parameters.before_dependencies>>
+      after_dependencies: <<parameters.after_dependencies>>
       hlint: <<parameters.hlint>>
       weeder: <<parameters.weeder>>
-      cache-prefix: <<parameters.cache-prefix>>-dependencies
+      cache_prefix: <<parameters.cache_prefix>>-dependencies
   - build:
-      stack-yaml: <<parameters.stack-yaml>>
-      stack-arguments: <<parameters.stack-arguments>>
-      cache-prefix: <<parameters.cache-prefix>>
+      stack_yaml: <<parameters.stack_yaml>>
+      stack_arguments: <<parameters.stack_arguments>>
+      cache_prefix: <<parameters.cache_prefix>>
   - test:
-      stack-yaml: <<parameters.stack-yaml>>
-      stack-arguments: <<parameters.stack-arguments>>
-      before-test: <<parameters.before-test>>
-      after-test: <<parameters.after-test>>
+      stack_yaml: <<parameters.stack_yaml>>
+      stack_arguments: <<parameters.stack_arguments>>
+      before_test: <<parameters.before_test>>
+      after_test: <<parameters.after_test>>
   - when:
       condition: <<parameters.hlint>>
       steps:
-        - lint-hlint:
-            stack-yaml: <<parameters.stack-yaml>>
-            hlint-yaml-url: <<parameters.hlint-yaml-url>>
+        - lint_hlint:
+            stack_yaml: <<parameters.stack_yaml>>
+            hlint_yaml_url: <<parameters.hlint_yaml_url>>
   - when:
       condition: <<parameters.weeder>>
       steps:
-        - lint-weeder:
-            stack-yaml: <<parameters.stack-yaml>>
+        - lint_weeder:
+            stack_yaml: <<parameters.stack_yaml>>

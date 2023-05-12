@@ -3,7 +3,7 @@ description: |
   Lint the project with Weeder
 
 parameters:
-  stack-yaml:
+  stack_yaml:
     description: "Path to stack.yaml file to use"
     type: string
     default: stack.yaml
@@ -11,9 +11,6 @@ parameters:
 steps:
   - run:
       name: Weeder
-      command: stack exec
-        --stack-yaml "<<parameters.stack-yaml>>"
-        --no-terminal
-        weeder
       environment:
-        STACK_YAML: <<parameters.stack-yaml>>
+        PARAM_STACK_YAML: <<parameters.stack_yaml>>
+      command: <<include(scripts/weeder.sh)>>

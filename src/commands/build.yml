@@ -3,11 +3,11 @@ description: |
   Build the project
 
 parameters:
-  stack-yaml:
+  stack_yaml:
     description: "Path to stack.yaml file to use"
     type: string
     default: stack.yaml
-  stack-arguments:
+  stack_arguments:
     description: "Additional arguments for ALL Stack invocations"
     type: string
     default: "--pedantic"
@@ -15,7 +15,7 @@ parameters:
     description: "Run Weeder?"
     type: boolean
     default: true
-  cache-prefix:
+  cache_prefix:
     description: "Prefix used for cache key"
     type: string
     default: v1
@@ -23,18 +23,16 @@ parameters:
 steps:
   - restore_cache:
       keys:
-        - <<parameters.cache-prefix>>-{{ checksum "<<parameters.stack-yaml>>" }}-{{ checksum "project.digest" }}-{{ checksum "source.digest" }}
-        - <<parameters.cache-prefix>>-{{ checksum "<<parameters.stack-yaml>>" }}-{{ checksum "project.digest" }}
-        - <<parameters.cache-prefix>>-{{ checksum "<<parameters.stack-yaml>>" }}-
+        - <<parameters.cache_prefix>>-{{ checksum "<<parameters.stack_yaml>>" }}-{{ checksum "project.digest" }}-{{ checksum "source.digest" }}
+        - <<parameters.cache_prefix>>-{{ checksum "<<parameters.stack_yaml>>" }}-{{ checksum "project.digest" }}
+        - <<parameters.cache_prefix>>-{{ checksum "<<parameters.stack_yaml>>" }}-
   - run:
       name: Build
-      command: stack build
-        --stack-yaml "<<parameters.stack-yaml>>"
-        --no-terminal
-        <<parameters.stack-arguments>>
-        --test
-        --no-run-tests
+      environment:
+        PARAM_STACK_ARGUMENTS: <<parameters.stack_arguments>>
+        PARAM_STACK_YAML: <<parameters.stack_yaml>>
+      command: <<include(scripts/build.sh)>>
   - save_cache:
-      key: <<parameters.cache-prefix>>-{{ checksum "<<parameters.stack-yaml>>" }}-{{ checksum "project.digest" }}-{{ checksum "source.digest" }}
+      key: <<parameters.cache_prefix>>-{{ checksum "<<parameters.stack_yaml>>" }}-{{ checksum "project.digest" }}-{{ checksum "source.digest" }}
       paths:
         - ./.stack-work

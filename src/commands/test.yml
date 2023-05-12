@@ -3,31 +3,29 @@ description: |
   Test the project
 
 parameters:
-  stack-yaml:
+  stack_yaml:
     description: "Path to stack.yaml file to use"
     type: string
     default: stack.yaml
-  stack-arguments:
+  stack_arguments:
     description: "Additional Stack arguments"
     type: string
-    default: ""
-  before-test:
+    default: "--pedantic"
+  before_test:
     description: "Steps to run before tests"
     type: steps
     default: []
-  after-test:
+  after_test:
     description: "Steps to run after tests"
     type: steps
     default: []
 
 steps:
-  - steps: <<parameters.before-test>>
+  - steps: <<parameters.before_test>>
   - run:
       name: Test
-      command: stack build
-        --stack-yaml "<<parameters.stack-yaml>>"
-        --no-terminal
-        <<parameters.stack-arguments>>
-        --pedantic
-        --test
-  - steps: <<parameters.after-test>>
+      environment:
+        PARAM_STACK_ARGUMENTS: <<parameters.stack_arguments>>
+        PARAM_STACK_YAML: <<parameters.stack_yaml>>
+      command: <<include(scripts/test.sh)>>
+  - steps: <<parameters.after_test>>

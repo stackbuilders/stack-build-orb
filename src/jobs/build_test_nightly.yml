@@ -2,39 +2,39 @@ description: |
   Build and test, with --resolver nightly
 
 parameters:
-  stack-yaml:
+  stack_yaml:
     description: "Path to stack.yaml file to use"
     type: string
     default: stack.yaml
-  stack-arguments:
+  stack_arguments:
     description: "Additional arguments for ALL Stack invocations"
     type: string
     default: ""
-  install-stack:
+  install_stack:
     description: "Install Stack? Necessary with default executor"
     type: boolean
     default: true
-  upgrade-stack:
+  upgrade_stack:
     description: "Upgrade Stack? Only useful with custom executor"
     type: boolean
     default: false
-  before-dependencies:
+  before_dependencies:
     description: "Steps to run before installing dependencies"
     type: steps
     default: []
-  after-dependencies:
+  after_dependencies:
     description: "Steps to run after installing dependencies"
     type: steps
     default: []
-  before-test:
+  before_test:
     description: "Steps to run before tests"
     type: steps
     default: []
-  after-test:
+  after_test:
     description: "Steps to run after tests"
     type: steps
     default: []
-  cache-prefix:
+  cache_prefix:
     description: "Prefix used for all cache keys"
     type: string
     default: v1-nightly
@@ -49,21 +49,21 @@ executor: <<parameters.executor>>
 steps:
   - checkout
   - setup:
-      stack-yaml: <<parameters.stack-yaml>>
-      stack-arguments: --resolver nightly <<parameters.stack-arguments>>
-      install-stack: <<parameters.install-stack>>
-      upgrade-stack: <<parameters.upgrade-stack>>
-      before-dependencies: <<parameters.before-dependencies>>
-      after-dependencies: <<parameters.after-dependencies>>
+      stack_yaml: <<parameters.stack_yaml>>
+      stack_arguments: --resolver nightly <<parameters.stack_arguments>>
+      install_stack: <<parameters.install_stack>>
+      upgrade_stack: <<parameters.upgrade_stack>>
+      before_dependencies: <<parameters.before_dependencies>>
+      after_dependencies: <<parameters.after_dependencies>>
       hlint: false
       weeder: false
-      cache-prefix: <<parameters.cache-prefix>>-dependencies
+      cache_prefix: <<parameters.cache_prefix>>-dependencies
   - build:
-      stack-yaml: <<parameters.stack-yaml>>
-      stack-arguments: --resolver nightly <<parameters.stack-arguments>>
-      cache-prefix: <<parameters.cache-prefix>>
+      stack_yaml: <<parameters.stack_yaml>>
+      stack_arguments: --resolver nightly <<parameters.stack_arguments>>
+      cache_prefix: <<parameters.cache_prefix>>
   - test:
-      stack-yaml: <<parameters.stack-yaml>>
-      stack-arguments: --resolver nightly <<parameters.stack-arguments>>
-      before-test: <<parameters.before-test>>
-      after-test: <<parameters.after-test>>
+      stack_yaml: <<parameters.stack_yaml>>
+      stack_arguments: --resolver nightly <<parameters.stack_arguments>>
+      before_test: <<parameters.before_test>>
+      after_test: <<parameters.after_test>>

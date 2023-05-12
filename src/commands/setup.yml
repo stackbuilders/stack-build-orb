@@ -3,27 +3,27 @@ description: |
   Install tooling and build project dependencies
 
 parameters:
-  stack-yaml:
+  stack_yaml:
     description: "Path to stack.yaml file to use"
     type: string
     default: stack.yaml
-  stack-arguments:
+  stack_arguments:
     description: "Additional Stack arguments"
     type: string
     default: ""
-  install-stack:
+  install_stack:
     description: "Install Stack? Necessary with default executor"
     type: boolean
     default: true
-  upgrade-stack:
+  upgrade_stack:
     description: "Upgrade Stack? Only useful with custom executor"
     type: boolean
     default: false
-  before-dependencies:
+  before_dependencies:
     description: "Steps to run before installing dependencies"
     type: steps
     default: []
-  after-dependencies:
+  after_dependencies:
     description: "Steps to run after installing dependencies"
     type: steps
     default: []
@@ -35,73 +35,59 @@ parameters:
     description: "Install Weeder?"
     type: boolean
     default: true
-  cache-prefix:
+  cache_prefix:
     description: "Prefix used for cache key"
     type: string
     default: v1-dependencies
 
 steps:
   - when:
-      condition: <<parameters.install-stack>>
+      condition: <<parameters.install_stack>>
       steps:
         - run:
             name: Install Stack
             command: curl -sSL https://get.haskellstack.org/ | sh
   - when:
-      condition: <<parameters.upgrade-stack>>
+      condition: <<parameters.upgrade_stack>>
       steps:
         - run:
             name: Upgrade Stack
             command: stack upgrade
   - run:
       name: Digest
-      command: |
-        # TODO: once committing the cabal file catches on, we can just
-        # assume it exists and md5sum *.cabal here.
-        find . -maxdepth 1 -type f \
-          -name package.yaml -name '*.cabal' \
-          -exec md5sum {} + > project.digest
-
-        git ls-files | xargs md5sum > source.digest
+      command: <<include(scripts/digest.sh)>>
   - restore_cache:
       keys:
-        - <<parameters.cache-prefix>>-{{ checksum "<<parameters.stack-yaml>>" }}-{{ checksum "project.digest" }}
-        - <<parameters.cache-prefix>>-{{ checksum "<<parameters.stack-yaml>>" }}-
-  - steps: <<parameters.before-dependencies>>
+        - <<parameters.cache_prefix>>-{{ checksum "<<parameters.stack_yaml>>" }}-{{ checksum "project.digest" }}
+        - <<parameters.cache_prefix>>-{{ checksum "<<parameters.stack_yaml>>" }}-
+  - steps: <<parameters.before_dependencies>>
   - run:
       name: Build dependencies
-      command: stack build
-        --stack-yaml "<<parameters.stack-yaml>>"
-        --no-terminal
-        <<parameters.stack-arguments>>
-        --dependencies-only
-        --bench
-        --no-run-benchmarks
-        --test
-        --no-run-tests
-  - steps: <<parameters.after-dependencies>>
+      environment:
+        PARAM_STACK_ARGUMENTS: <<parameters.stack_arguments>>
+        PARAM_STACK_YAML: <<parameters.stack_yaml>>
+      command: <<include(scripts/build-dependencies.sh)>>
+  - steps: <<parameters.after_dependencies>>
   - when:
       condition: <<parameters.hlint>>
       steps:
         - run:
             name: Install HLint
-            command: stack install
-              --stack-yaml "<<parameters.stack-yaml>>"
-              --no-terminal
-              <<parameters.stack-arguments>>
-              --copy-compiler-tool hlint
+            environment:
+              PARAM_STACK_ARGUMENTS: <<parameters.stack_arguments>>
+              PARAM_STACK_YAML: <<parameters.stack_yaml>>
+            command: <<include(scripts/install-hlint.sh)>>
   - when:
       condition: <<parameters.weeder>>
       steps:
         - run:
             name: Install Weeder
-            command: stack install
-              --stack-yaml "<<parameters.stack-yaml>>"
-              --no-terminal
-              <<parameters.stack-arguments>>
-              --copy-compiler-tool weeder
+            environment:
+              PARAM_STACK_ARGUMENTS: <<parameters.stack_arguments>>
+              PARAM_STACK_YAML: <<parameters.stack_yaml>>
+            command: <<include(scripts/install-weeder.sh)>>
   - save_cache:
-      key: <<parameters.cache-prefix>>-{{ checksum "<<parameters.stack-yaml>>" }}-{{ checksum "project.digest" }}
+      key: <<parameters.cache_prefix>>-{{ checksum "<<parameters.stack_yaml>>" }}-{{ checksum "project.digest" }}
       paths:
         - ~/.stack
         - ./.stack-work

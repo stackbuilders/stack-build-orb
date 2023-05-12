@@ -10,9 +10,15 @@ workflows:
       - orb-tools/pack:
           requires:
             - orb-tools/lint
+      - orb-tools/review:
+          requires:
+            - orb-tools/lint
+
+          exclude: "RC005,RC010"
       - orb-tools/publish:
           requires:
             - orb-tools/pack
+            - orb-tools/review
           filters:
             branches:
               only: main
