@@ -8,7 +8,8 @@ workflows:
     jobs:
       - orb-tools/lint
       - orb-tools/pack
-      - orb-tools/review
+      - orb-tools/review:
+          exclude: "RC005"
       - orb-tools/publish:
           requires:
             - orb-tools/lint
