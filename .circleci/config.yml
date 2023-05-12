@@ -14,7 +14,7 @@ workflows:
           requires:
             - orb-tools/lint
 
-          exclude: "RC005,RC010"
+          exclude: "RC005"
       - orb-tools/publish:
           requires:
             - orb-tools/pack
