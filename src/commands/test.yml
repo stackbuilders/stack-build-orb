@@ -10,7 +10,7 @@ parameters:
   stack-arguments:
     description: "Additional Stack arguments"
     type: string
-    default: ""
+    default: "--pedantic"
   before-test:
     description: "Steps to run before tests"
     type: steps
@@ -24,10 +24,8 @@ steps:
   - steps: <<parameters.before-test>>
   - run:
       name: Test
-      command: stack build
-        --stack-yaml "<<parameters.stack-yaml>>"
-        --no-terminal
-        <<parameters.stack-arguments>>
-        --pedantic
-        --test
+      environment:
+        PARAM_STACK_ARGUMENTS: <<parameters.stack-arguments>>
+        PARAM_STACK_YAML: <<parameters.stack-yaml>>
+      command: <<include(scripts/test.sh)>>
   - steps: <<parameters.after-test>>
