@@ -7,16 +7,12 @@ workflows:
   main:
     jobs:
       - orb-tools/lint
-      - orb-tools/pack:
-          requires:
-            - orb-tools/lint
+      - orb-tools/pack
       - orb-tools/review:
-          requires:
-            - orb-tools/lint
-
           exclude: "RC005,RC010"
       - orb-tools/publish:
           requires:
+            - orb-tools/lint
             - orb-tools/pack
             - orb-tools/review
           filters:
