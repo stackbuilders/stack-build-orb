@@ -82,7 +82,7 @@ steps:
   - when:
       condition: <<parameters.hlint>>
       steps:
-        - lint-hlint:
+        - lint_hlint:
             stack_yaml: <<parameters.stack_yaml>>
             hlint_yaml_url: <<parameters.hlint_yaml_url>>
   - when:
