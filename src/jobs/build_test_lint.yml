@@ -88,5 +88,5 @@ steps:
   - when:
       condition: <<parameters.weeder>>
       steps:
-        - lint-weeder:
+        - lint_weeder:
             stack_yaml: <<parameters.stack_yaml>>
