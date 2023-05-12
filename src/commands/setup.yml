@@ -90,4 +90,4 @@ steps:
       key: <<parameters.cache_prefix>>-{{ checksum "<<parameters.stack_yaml>>" }}-{{ checksum "project.digest" }}
       paths:
         - ~/.stack
-        - ./.stack_work
+        - ./.stack-work

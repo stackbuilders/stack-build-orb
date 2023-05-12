@@ -35,4 +35,4 @@ steps:
   - save_cache:
       key: <<parameters.cache_prefix>>-{{ checksum "<<parameters.stack_yaml>>" }}-{{ checksum "project.digest" }}-{{ checksum "source.digest" }}
       paths:
-        - ./.stack_work
+        - ./.stack-work
