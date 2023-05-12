@@ -7,12 +7,13 @@ workflows:
   main:
     jobs:
       - orb-tools/lint
-      - orb-tools/pack:
-          requires:
-            - orb-tools/lint
+      - orb-tools/pack
+      - orb-tools/review
       - orb-tools/publish:
           requires:
+            - orb-tools/lint
             - orb-tools/pack
+            - orb-tools/review
           filters:
             branches:
               only: main
