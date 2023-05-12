@@ -28,12 +28,10 @@ steps:
         - <<parameters.cache-prefix>>-{{ checksum "<<parameters.stack-yaml>>" }}-
   - run:
       name: Build
-      command: stack build
-        --stack-yaml "<<parameters.stack-yaml>>"
-        --no-terminal
-        <<parameters.stack-arguments>>
-        --test
-        --no-run-tests
+      environment:
+        PARAM_STACK_ARGUMENTS: <<parameters.stack-arguments>>
+        PARAM_STACK_YAML: <<parameters.stack-yaml>>
+      command: <<include(scripts/build.sh)>>
   - save_cache:
       key: <<parameters.cache-prefix>>-{{ checksum "<<parameters.stack-yaml>>" }}-{{ checksum "project.digest" }}-{{ checksum "source.digest" }}
       paths:

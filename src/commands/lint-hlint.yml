@@ -15,12 +15,7 @@ parameters:
 steps:
   - run:
       name: HLint
-      command: |
-        if [ -n "<<parameters.hlint-yaml-url>>" ]; then
-          curl -L -o .hlint.yaml "<<parameters.hlint-yaml-url>>"
-        fi
-
-        stack exec \
-          --stack-yaml "<<parameters.stack-yaml>>" \
-          --no-terminal \
-          hlint .
+      environment:
+        PARAM_STACK_YAML: <<parameters.stack-yaml>>
+        PARAM_HLINT_YAML_URL: <<parameters.hlint-yaml-url>>
+      command: <<include(scripts/hlint.sh)>>

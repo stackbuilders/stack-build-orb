@@ -11,9 +11,6 @@ parameters:
 steps:
   - run:
       name: Weeder
-      command: stack exec
-        --stack-yaml "<<parameters.stack-yaml>>"
-        --no-terminal
-        weeder
       environment:
-        STACK_YAML: <<parameters.stack-yaml>>
+        PARAM_STACK_YAML: <<parameters.stack-yaml>>
+      command: <<include(scripts/weeder.sh)>>
