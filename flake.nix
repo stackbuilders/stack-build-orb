@@ -28,6 +28,8 @@
             pkgs.yamllint
           ];
 
+          languages.haskell.enable = true;
+
           pre-commit.hooks = {
             nixpkgs-fmt.enable = true;
             shellcheck.enable = true;

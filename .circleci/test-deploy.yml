@@ -26,6 +26,7 @@ jobs:
   command-test:
     docker:
       - image: debian:11
+    working_directory: ~/project/sample
     steps:
       - checkout
       - run: |
