@@ -12,5 +12,5 @@ steps:
   - run:
       name: Weeder
       environment:
-        PARAM_STACK_YAML: <<parameters.stack_yaml>>
+        STACK_YAML: <<parameters.stack_yaml>>
       command: <<include(scripts/weeder.sh)>>

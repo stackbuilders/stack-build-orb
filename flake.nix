@@ -24,10 +24,15 @@
 
           packages = [
             pkgs.circleci-cli
+            pkgs.shellcheck
+            pkgs.yamllint
           ];
+
+          languages.haskell.enable = true;
 
           pre-commit.hooks = {
             nixpkgs-fmt.enable = true;
+            shellcheck.enable = true;
             yamllint.enable = true;
           };
         };

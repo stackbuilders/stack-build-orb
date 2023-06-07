@@ -64,8 +64,8 @@ steps:
   - run:
       name: Build dependencies
       environment:
-        PARAM_STACK_ARGUMENTS: <<parameters.stack_arguments>>
-        PARAM_STACK_YAML: <<parameters.stack_yaml>>
+        STACK_ARGUMENTS: <<parameters.stack_arguments>>
+        STACK_YAML: <<parameters.stack_yaml>>
       command: <<include(scripts/build_dependencies.sh)>>
   - steps: <<parameters.after_dependencies>>
   - when:
@@ -74,8 +74,8 @@ steps:
         - run:
             name: Install HLint
             environment:
-              PARAM_STACK_ARGUMENTS: <<parameters.stack_arguments>>
-              PARAM_STACK_YAML: <<parameters.stack_yaml>>
+              STACK_ARGUMENTS: <<parameters.stack_arguments>>
+              STACK_YAML: <<parameters.stack_yaml>>
             command: <<include(scripts/install_hlint.sh)>>
   - when:
       condition: <<parameters.weeder>>
@@ -83,8 +83,8 @@ steps:
         - run:
             name: Install Weeder
             environment:
-              PARAM_STACK_ARGUMENTS: <<parameters.stack_arguments>>
-              PARAM_STACK_YAML: <<parameters.stack_yaml>>
+              STACK_ARGUMENTS: <<parameters.stack_arguments>>
+              STACK_YAML: <<parameters.stack_yaml>>
             command: <<include(scripts/install_weeder.sh)>>
   - save_cache:
       key: <<parameters.cache_prefix>>-{{ checksum "<<parameters.stack_yaml>>" }}-{{ checksum "project.digest" }}

@@ -1,5 +1,7 @@
----
 extends: default
+
+ignore:
+  - sample/
 
 rules:
   line-length:
