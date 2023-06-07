@@ -32,9 +32,11 @@ jobs:
           path: ~/project
       - run: |
           apt-get update
-          apt-get install -y curl
+          apt-get install -y curl libtinfo-dev
       # Run your orb's commands to validate them.
       - stack-build/setup
+      - stack-build/build
+      - stack-build/test
 
 workflows:
   test-deploy:
