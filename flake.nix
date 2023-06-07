@@ -28,6 +28,7 @@
 
           pre-commit.hooks = {
             nixpkgs-fmt.enable = true;
+            shellcheck.enable = true;
             yamllint.enable = true;
           };
         };
