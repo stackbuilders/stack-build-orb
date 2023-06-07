@@ -28,7 +28,8 @@ jobs:
       - image: debian:11
     working_directory: ~/project/sample
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
       - run: |
           apt-get update
           apt-get install -y curl
