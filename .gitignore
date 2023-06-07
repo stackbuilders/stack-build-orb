@@ -4,3 +4,4 @@ orb.yml
 
 .devenv/
 .direnv/
+.pre-commit-config.yaml
