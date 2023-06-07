@@ -24,6 +24,7 @@
 
           packages = [
             pkgs.circleci-cli
+            pkgs.shellcheck
           ];
 
           pre-commit.hooks = {

@@ -6,4 +6,4 @@ stack build \
   --no-terminal \
   --test \
   --no-run-tests \
-  $STACK_ARGUMENTS
+  "$STACK_ARGUMENTS"
