@@ -16,6 +16,6 @@ steps:
   - run:
       name: HLint
       environment:
-        PARAM_STACK_YAML: <<parameters.stack_yaml>>
-        PARAM_HLINT_YAML_URL: <<parameters.hlint_yaml_url>>
+        HLINT_YAML_URL: <<parameters.hlint_yaml_url>>
+        STACK_YAML: <<parameters.stack_yaml>>
       command: <<include(scripts/hlint.sh)>>

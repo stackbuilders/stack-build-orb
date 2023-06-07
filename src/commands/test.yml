@@ -25,7 +25,7 @@ steps:
   - run:
       name: Test
       environment:
-        PARAM_STACK_ARGUMENTS: <<parameters.stack_arguments>>
-        PARAM_STACK_YAML: <<parameters.stack_yaml>>
+        STACK_ARGUMENTS: <<parameters.stack_arguments>>
+        STACK_YAML: <<parameters.stack_yaml>>
       command: <<include(scripts/test.sh)>>
   - steps: <<parameters.after_test>>
