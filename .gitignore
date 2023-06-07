@@ -1,3 +1,6 @@
 out/*
 !out/.gitkeep
 orb.yml
+
+.devenv/
+.direnv/
