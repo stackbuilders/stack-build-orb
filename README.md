@@ -19,17 +19,17 @@ workflows:
           name: "default"
       - stack-build/build-test-lint:
           name: "ghc-8.8.3 / lts-15.12"
-          stack-yaml: stack-lts-15.12.yaml
+          stack_yaml: stack-lts-15.12.yaml
       - stack-build/build-test-lint:
           name: "ghc-8.6.5 / lts-14.27"
-          stack-yaml: stack-lts-14.27.yaml
+          stack_yaml: stack-lts-14.27.yaml
       - stack-build/build-test-lint:
           name: "ghc-8.4.3 / lts-12.10"
-          stack-yaml: stack-lts-12.10.yaml
+          stack_yaml: stack-lts-12.10.yaml
       - stack-build/build-test-lint:
           name: "nightly"
-          stack-yaml: stack-nightly.yaml
-          stack-arguments: --resolver nightly
+          stack_yaml: stack-nightly.yaml
+          stack_arguments: --resolver nightly
           hlint: false
           weeder: false
 ```
